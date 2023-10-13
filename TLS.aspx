@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" %>
+<%@ Page Language="C#" AutoEventWireup="true" %>
 
 <%@ Import Namespace="System.Net" %>
 <%@ Import Namespace="System.Reflection" %>
@@ -47,12 +47,14 @@
 <body>
 
     <% if (ServicePointManager.SecurityProtocol == SecurityProtocolType.SystemDefault)
-        {%>
+        {
+%>
     <h1 class="good">Application is using SystemDefault TLS protocols</h1>
     <%}
         else
         { %>
     <h1 class="bad">Application is not using SystemDefault TLS protocols</h1>
+    <h2 class="bad">Protocols in use: <%= ServicePointManager.SecurityProtocol %></h2>
     <%} %>
     <%
         bool switchSetDontEnableSchUseStrongCrypto;
@@ -110,7 +112,7 @@
             <td><%= switchDontEnableSchUseStrongCrypto %></td>
             <td><%= switchSetDontEnableSchUseStrongCrypto ? "Strong crypto disabled" : "ok" %></td>
         </tr>
-        <tr class="<%= registrySchUseStrongCrypto == int.MaxValue ? "warn" : string.Empty %>">
+        <tr class="<%= registrySchUseStrongCrypto != 1 ? "warn" : string.Empty %>">
             <td>RegistryConfiguration.GlobalConfigReadInt("SchUseStrongCrypto")</td>
             <td><%= registrySchUseStrongCrypto == int.MaxValue ? "(not configured)" : registrySchUseStrongCrypto.ToString() %></td>
         </tr>
@@ -130,7 +132,7 @@
             <td><%= switchSetDontEnableSystemDefaultTlsVersions %></td>
             <td><%= switchDontEnableSystemDefaultTlsVersions ? "SystemDefault disabled" : "ok" %></td>
         </tr>
-        <tr class="<%= registrySystemDefaultTlsVersions == int.MaxValue ? "warn" : string.Empty %>">
+        <tr class="<%= registrySystemDefaultTlsVersions != 1 ? "warn" : string.Empty %>">
             <td>RegistryConfiguration.GlobalConfigReadInt("SystemDefaultTlsVersions")</td>
             <td><%= registrySystemDefaultTlsVersions == int.MaxValue ? "(not configured)" : registrySystemDefaultTlsVersions.ToString() %></td>
         </tr>
